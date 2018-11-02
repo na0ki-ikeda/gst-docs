@@ -14,17 +14,35 @@ endif
 
 ifeq ($(TARGET_ARCH_ABI),armeabi)
 GSTREAMER_ROOT        := $(GSTREAMER_ROOT_ANDROID)/arm
+ADDITIONAL_INC        := -I$(NDK_ROOT)/sysroot/usr/include/arm-linux-androideabi
+TARGET_CFLAGS         := -target armv5te-none-linux-androideabi $(TARGET_CFLAGS)
+TARGET_LDFLAGS        := -target armv5te-none-linux-androideabi $(TARGET_LDFLAGS)
 else ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
 GSTREAMER_ROOT        := $(GSTREAMER_ROOT_ANDROID)/armv7
+ADDITIONAL_INC        := -I$(NDK_ROOT)/sysroot/usr/include/arm-linux-androideabi
+TARGET_CFLAGS         := -target armv7-none-linux-androideabi $(TARGET_CFLAGS)
+TARGET_LDFLAGS        := -target armv7-none-linux-androideabi $(TARGET_LDFLAGS)
 else ifeq ($(TARGET_ARCH_ABI),arm64-v8a)
 GSTREAMER_ROOT        := $(GSTREAMER_ROOT_ANDROID)/arm64
+ADDITIONAL_INC        := -I$(NDK_ROOT)/sysroot/usr/include/aarch64-linux-android
+TARGET_CFLAGS         := -target aarch64-none-linux-android $(TARGET_CFLAGS)
+TARGET_LDFLAGS        := -target aarch64-none-linux-android $(TARGET_LDFLAGS)
 else ifeq ($(TARGET_ARCH_ABI),x86)
 GSTREAMER_ROOT        := $(GSTREAMER_ROOT_ANDROID)/x86
+ADDITIONAL_INC        := -I$(NDK_ROOT)/sysroot/usr/include/i686-linux-android
+TARGET_CFLAGS         := -target i686-none-linux-android $(TARGET_CFLAGS)
+TARGET_LDFLAGS        := -target i686-none-linux-android $(TARGET_LDFLAGS)
 else ifeq ($(TARGET_ARCH_ABI),x86_64)
 GSTREAMER_ROOT        := $(GSTREAMER_ROOT_ANDROID)/x86_64
+ADDITIONAL_INC        := -I$(NDK_ROOT)/sysroot/usr/include/x86_64-linux-android
+TARGET_CFLAGS         := -target x86_64-none-linux-android $(TARGET_CFLAGS)
+TARGET_LDFLAGS        := -target x86_64-none-linux-android $(TARGET_LDFLAGS)
 else
 $(error Target arch ABI not supported: $(TARGET_ARCH_ABI))
 endif
+
+TARGET_CFLAGS             := $(TARGET_CFLAGS) -I$(NDK_ROOT)/sysroot/usr/include $(ADDITIONAL_INC)
+
 
 GSTREAMER_NDK_BUILD_PATH  := $(GSTREAMER_ROOT)/share/gst-android/ndk-build/
 include $(GSTREAMER_NDK_BUILD_PATH)/plugins.mk

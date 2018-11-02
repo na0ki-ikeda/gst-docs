@@ -69,3 +69,23 @@ but some parts of the documentation may still be licensed differently
 (e.g. LGPLv2.1) for historical reasons.
 
 [cc-by-sa-4.0]: https://creativecommons.org/licenses/by-sa/4.0/
+
+# How to build Android Samples
+
+1. Open examples/tutorials/android with AndroidStudio3
+1. Download prebuild binaries (I tested with 1.14.4)
+    - https://gstreamer.freedesktop.org/data/pkg/android/
+1. Extract the tarball to local path
+    - C:\\gstreamer\\1.0\\Android
+    - "Android" directory contrains arm, arm64, armv7, x86, x86_64 subdirectories
+1. Add gstAndroidRoot to gradle.properties like below
+    - gstAndroidRoot=C\:\\\\gstreamer\\\\1.0\\\\Android
+1. Make project!
+
+## note
+
+- why the original repository has compile errors
+  - Changed compile options for clang in AndroidStudio
+- tutorial4 and tutorial5 don't work (you can see error log on logcat in debug mode)
+  - each tutorial creates a thread for glib main loop
+  - in my understanding, gl functions require to be called from main thread
